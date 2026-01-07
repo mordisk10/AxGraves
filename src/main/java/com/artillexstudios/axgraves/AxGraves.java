@@ -10,6 +10,7 @@ import com.artillexstudios.axapi.libs.boostedyaml.settings.updater.UpdaterSettin
 import com.artillexstudios.axapi.metrics.AxMetrics;
 import com.artillexstudios.axapi.utils.MessageUtils;
 import com.artillexstudios.axapi.utils.featureflags.FeatureFlags;
+import com.artillexstudios.axgraves.api.AxGravesAPI;
 import com.artillexstudios.axgraves.commands.CommandManager;
 import com.artillexstudios.axgraves.grave.Grave;
 import com.artillexstudios.axgraves.grave.GravePlaceholders;
@@ -22,12 +23,15 @@ import com.artillexstudios.axgraves.schedulers.TickGraves;
 import com.artillexstudios.axgraves.utils.LocationUtils;
 import com.artillexstudios.axgraves.utils.UpdateNotifier;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.ServicePriority;
 
 import java.io.File;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-public final class AxGraves extends AxPlugin {
+public final class AxGraves extends AxPlugin implements AxGravesAPI {
     private static AxPlugin instance;
     public static Config CONFIG;
     public static Config LANG;
@@ -37,6 +41,10 @@ public final class AxGraves extends AxPlugin {
 
     public static AxPlugin getInstance() {
         return instance;
+    }
+
+    public static AxGravesAPI getAPI() {
+        return (AxGravesAPI) instance;
     }
 
     public void enable() {
@@ -68,9 +76,13 @@ public final class AxGraves extends AxPlugin {
         metrics.start();
 
         if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier(this, 5076);
+
+        getServer().getServicesManager().register(AxGravesAPI.class, this, this, ServicePriority.Normal);
     }
 
     public void disable() {
+        getServer().getServicesManager().unregister(AxGravesAPI.class, this);
+
         if (metrics != null) metrics.cancel();
 
         TickGraves.stop();
@@ -97,4 +109,17 @@ public final class AxGraves extends AxPlugin {
         FeatureFlags.HOLOGRAM_UPDATE_TICKS.set(5L);
         FeatureFlags.ENABLE_PACKET_LISTENERS.set(true);
     }
+
+    @Override
+    public Optional<Grave> findGrave(OfflinePlayer player, String world, double x, double y, double z) {
+        return SpawnedGraves.getGraves().stream()
+                .filter(grave -> {
+                    var location = grave.getLocation();
+                    if (location.getWorld() == null) return false;
+
+                    return grave.getPlayer().getUniqueId().equals(player.getUniqueId()) && location.getX() == x && location.getY() == y && location.getZ() == z && location.getWorld().getName().equals(world);
+                })
+                .findFirst();
+    }
+
 }

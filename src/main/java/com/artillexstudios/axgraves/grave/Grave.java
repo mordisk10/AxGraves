@@ -307,4 +307,8 @@ public class Grave {
     public String getPlayerName() {
         return playerName;
     }
+
+    public boolean isRemoved() {
+        return removed;
+    }
 }

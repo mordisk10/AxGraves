@@ -32,6 +32,11 @@ grave-list:
   grave: "&#FF00FF[TP] &#FFAAFF%player% &7- &#FFAAFF%world% %x%, %y%, %z% &7(%time%)"
   no-graves: "&#FFAAFFNo grave found!"
 
+grave-remove:
+  success: "&#33FF33Successfully removed the grave of &#FFFFFF%player%&#33FF33!"
+  not-found: "&#FF3333No grave by that location found for &#FFFFFF%player%&#FF3333!"
+  invalid-arguments: "&#FF3333Invalid arguments! Usage: &#FFFFFF/axgraves remove <player> <world> <x> <y> <z>&#FF3333"
+
 commands:
   invalid-value: "&#FF0000Invalid parameter: &#BB0000%value%"
   invalid-command: "&#FF0000Invalid command or subcommand!"

@@ -1,14 +1,10 @@
 package com.artillexstudios.axgraves.commands;
 
-import com.artillexstudios.axgraves.commands.subcommands.Help;
-import com.artillexstudios.axgraves.commands.subcommands.List;
-import com.artillexstudios.axgraves.commands.subcommands.Reload;
-import com.artillexstudios.axgraves.commands.subcommands.Teleport;
+import com.artillexstudios.axgraves.commands.subcommands.*;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.annotation.Subcommand;
@@ -39,5 +35,11 @@ public class Commands implements OrphanCommand {
     @CommandPermission("axgraves.tp")
     public void tp(@NotNull Player sender, @Optional World world, @Optional Double x, @Optional Double y, @Optional Double z) {
         Teleport.INSTANCE.execute(sender, world, x, y, z);
+    }
+
+    @Subcommand("remove")
+    @CommandPermission("axgraves.remove")
+    public void remove(@NotNull Player sender, World world, Double x, Double y, Double z) {
+        Remove.INSTANCE.execute(sender, world, x, y, z);
     }
 }
