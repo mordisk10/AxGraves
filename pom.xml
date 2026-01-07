@@ -68,6 +68,10 @@
 
     <repositories>
         <repository>
+            <id>shinyRepo</id>
+            <url>https://repo.shiny.pw/private/</url>
+        </repository>
+        <repository>
             <id>Artillex-Studios</id>
             <url>https://repo.artillex-studios.com/releases/</url>
         </repository>
@@ -109,8 +113,8 @@
 
     <distributionManagement>
         <repository>
-            <id>Artillex-Studios</id>
-            <url>https://repo.artillex-studios.com/releases/</url>
+            <id>shinyRepo</id>
+            <url>https://repo.shiny.pw/private</url>
         </repository>
     </distributionManagement>
 </project>
