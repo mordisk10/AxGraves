@@ -72,10 +72,6 @@
             <url>https://repo.shiny.pw/private/</url>
         </repository>
         <repository>
-            <id>Artillex-Studios</id>
-            <url>https://repo.artillex-studios.com/releases/</url>
-        </repository>
-        <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
@@ -97,9 +93,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.artillexstudios.axapi</groupId>
+            <groupId>com.artillexstudios.api</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.830</version>
+            <version>1.4.749</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
